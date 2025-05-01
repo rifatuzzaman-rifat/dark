@@ -429,7 +429,7 @@
           <p>Characters: ${story.characters.join(', ')}</p>
           ${story.parts.map((part, index) => `
             <div class="part">
-              <button class="part-toggle">Part ${index + 1} by ${part.author}</button>
+              <button class="part-toggle">Part ${index + 1} <i class="fas fa-arrow-right"></i> ${part.author}</button>
               <div class="part-content">
                 <img src="${part.subCover}" alt="Part ${index + 1}" onerror="this.src='https://via.placeholder.com/300x300?text=Image+Not+Found'; console.error('Failed to load part image: ${part.subCover}');">
                 <p>Tags: ${part.tags.join(', ')}</p>
