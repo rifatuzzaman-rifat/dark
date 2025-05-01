@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Story Haven</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif; /* Default font for body */
+    }
+
+    body {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: #e0e0e0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Bar */
+    nav.top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px; /* Fixed height for navbar */
+      background: linear-gradient(180deg, #0f3460, #1a1a2e);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .brand {
+      color: #00ddeb;
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(0, 221, 235, 0.5);
+      text-decoration: none;
+      font-family: 'Playfair Display', serif; /* Fancy font for brand */
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 1.2rem;
+      padding: 10px 15px;
+      transition: background 0.3s, color 0.3s;
+      display: flex;
+      align-items: center;
+      font-family: 'Montserrat', sans-serif; /* Font for nav links */
+    }
+
+    .nav-links a i {
+      margin-right: 8px;
+    }
+
+    .nav-links a:hover {
+      background: #ff2e63;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #00ddeb;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 10px;
+    }
+
+    /* Main Content */
+    .container {
+      padding: 80px 20px 20px; /* Adjust for navbar height (60px + extra spacing) */
+      min-height: calc(100vh - 40px);
+    }
+
+    h1, h2 {
+      color: #00ddeb;
+      text-shadow: 0 0 10px rgba(0, 221, 235, 0.5);
+      font-family: 'Montserrat', sans-serif; /* Font for headings */
+      display: flex;
+      align-items: center;
+    }
+
+    h1 i, h2 i {
+      margin-right: 10px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    /* Search Bar */
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      background: #0f3460;
+      border: 2px solid #00ddeb;
+      border-radius: 5px;
+      color: #e0e0e0;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #ff2e63;
+    }
+
+    input[type="text"]::placeholder {
+      color: #adb5bd;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .story-card, .character-card {
+      background: #16213e;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .story-card:hover, .character-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 221, 235, 0.3);
+    }
+
+    .story-card img, .character-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 2px solid #ff2e63;
+    }
+
+    .story-card h2, .character-card h2 {
+      font-size: 1.5rem;
+      margin: 10px;
+      color: #e0e0e0;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .story-card p, .character-card p {
+      font-size: 0.9rem;
+      margin: 0 10px 10px;
+      color: #adb5bd;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* Story Detail */
+    #story-content img {
+      max-height: 300px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .part {
+      margin-bottom: 20px;
+    }
+
+    .part-toggle {
+      background: none;
+      border: none;
+      color: #00ddeb;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 10px;
+      display: block;
+      text-align: left;
+      transition: color 0.3s;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .part-toggle:hover {
+      color: #ff2e63;
+    }
+
+    .part-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: #0f3460;
+      border-radius: 8px;
+      padding: 0 15px;
+    }
+
+    .part-content.active {
+      max-height: 2000px; /* Adjust for longer content */
+      padding: 15px;
+    }
+
+    .part-content img {
+      max-height: 200px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .back-btn {
+      color: #00ddeb;
+      text-decoration: none;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      display: inline-block;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .back-btn:hover {
+      color: #ff2e63;
+    }
+
+    /* Media Queries */
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(180deg, #0f3460, #1a1a2e);
+        padding: 10px 0;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 15px;
+        text-align: center;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .container {
+        padding: 80px 15px 15px; /* Adjust for mobile navbar height */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <nav class="top-nav">
+    <a href="#" class="brand">DARK</a>
+    <button class="nav-toggle"><i class="fas fa-bars"></i></button>
+    <div class="nav-links">
+      <a href="#stories" data-section="stories"><i class="fas fa-book"></i> Stories</a>
+      <a href="#characters" data-section="characters"><i class="fas fa-users"></i> Characters</a>
+      <a href="#tags" data-section="tags"><i class="fas fa-tags"></i> Tags</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Stories Section -->
+    <section id="stories" class="section active">
+      <h1><i class="fas fa-book"></i> Stories</h1>
+      <input id="tag-search" type="text" placeholder="Search tags (e.g., #forest #king)">
+      <div id="stories-grid" class="grid"></div>
+    </section>
+
+    <!-- Story Detail Section -->
+    <section id="story-detail" class="section">
+      <a href="#" id="back-to-stories" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Stories</a>
+      <div id="story-content"></div>
+    </section>
+
+    <!-- Characters Section -->
+    <section id="characters" class="section">
+      <h1><i class="fas fa-users"></i> Characters</h1>
+      <div id="characters-grid" class="grid"></div>
+    </section>
+
+    <!-- Character Stories Section -->
+    <section id="character-stories" class="section">
+      <a href="#" id="back-to-characters" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Characters</a>
+      <h2 id="character-name"></h2>
+      <div id="character-stories-grid" class="grid"></div>
+    </section>
+
+    <!-- Tags Section -->
+    <section id="tags" class="section">
+      <h1><i class="fas fa-tags"></i> Tags</h1>
+      <input id="tag-search-tags" type="text" placeholder="Search tags (e.g., #forest #king)">
+      <div id="tags-grid" class="grid"></div>
+    </section>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Load data with error handling
+      let stories, characters;
+      try {
+        const storiesResponse = await fetch('data/stories.json');
+        if (!storiesResponse.ok) throw new Error('Failed to fetch stories.json');
+        stories = await storiesResponse.json();
+        console.log('Stories loaded:', stories);
+
+        const charactersResponse = await fetch('data/characters.json');
+        if (!charactersResponse.ok) throw new Error('Failed to fetch characters.json');
+        characters = await charactersResponse.json();
+        console.log('Characters loaded:', characters);
+        characters.forEach(character => {
+          console.log(`Attempting to load image for ${character.name}: ${character.image}`);
+        });
+      } catch (error) {
+        console.error('Failed to load data:', error);
+        alert('Error loading data. Please ensure data/stories.json and data/characters.json exist and use a local server (e.g., Live Server in VS Code).');
+        stories = [];
+        characters = [];
+      }
+
+      // Navigation
+      const sections = document.querySelectorAll('.section');
+      const navLinks = document.querySelectorAll('.nav-links a');
+      const navToggle = document.querySelector('.nav-toggle');
+      const navLinksContainer = document.querySelector('.nav-links');
+
+      navToggle.addEventListener('click', () => {
+        navLinksContainer.classList.toggle('active');
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = link.getAttribute('data-section');
+          sections.forEach(section => {
+            section.classList.toggle('active', section.id === target);
+          });
+          navLinksContainer.classList.remove('active'); // Close mobile menu after clicking
+        });
+      });
+
+      // Stories Grid
+      const storiesGrid = document.getElementById('stories-grid');
+      const renderStories = (filteredStories) => {
+        storiesGrid.innerHTML = '';
+        if (!filteredStories || filteredStories.length === 0) {
+          storiesGrid.innerHTML = '<p>No stories found.</p>';
+          return;
+        }
+        filteredStories.forEach(story => {
+          const card = document.createElement('div');
+          card.className = 'story-card';
+          card.innerHTML = `
+            <img src="${story.coverImage}" alt="${story.title}" onerror="this.src='https://via.placeholder.com/200x200?text=Image+Not+Found';">
+            <h2>${story.title}</h2>
+            <p>${story.preview}</p>
+          `;
+          card.addEventListener('click', () => showStoryDetail(story));
+          storiesGrid.appendChild(card);
+        });
+      };
+      renderStories(stories);
+
+      // Story Detail
+      const storyDetail = document.getElementById('story-detail');
+      const storyContent = document.getElementById('story-content');
+      const backToStories = document.getElementById('back-to-stories');
+      const showStoryDetail = (story) => {
+        storyContent.innerHTML = `
+          <img src="${story.coverImage}" alt="${story.title}" onerror="this.src='https://via.placeholder.com/300x300?text=Image+Not+Found';">
+          <h2>${story.title}</h2>
+          <p>Tags: ${story.tags.join(', ')}</p>
+          <p>Characters: ${story.characters.join(', ')}</p>
+          ${story.parts.map((part, index) => `
+            <div class="part">
+              <button class="part-toggle">পর্ব ${index + 1} ---> ${part.author}</button>
+              <div class="part-content">
+                <img src="${part.subCover}" alt="Part ${index + 1}" onerror="this.src='https://via.placeholder.com/200x200?text=Image+Not+Found';">
+                <p>Tags: ${part.tags.join(', ')}</p>
+                <p>${part.content}</p>
+              </div>
+            </div>
+          `).join('')}
+        `;
+        sections.forEach(section => section.classList.toggle('active', section.id === 'story-detail'));
+        document.querySelectorAll('.part-toggle').forEach(btn => {
+          btn.addEventListener('click', () => {
+            btn.nextElementSibling.classList.toggle('active');
+          });
+        });
+      };
+      backToStories.addEventListener('click', (e) => {
+        e.preventDefault();
+        sections.forEach(section => section.classList.toggle('active', section.id === 'stories'));
+      });
+
+      // Characters Grid
+      const charactersGrid = document.getElementById('characters-grid');
+      const renderCharacters = () => {
+        charactersGrid.innerHTML = '';
+        if (!characters || characters.length === 0) {
+          charactersGrid.innerHTML = '<p>No characters found.</p>';
+          return;
+        }
+        characters.forEach(character => {
+          const card = document.createElement('div');
+          card.className = 'character-card';
+          card.innerHTML = `
+            <img src="${character.image}" alt="${character.name}" onerror="this.src='https://via.placeholder.com/200x200?text=Image+Not+Found'; console.error('Failed to load image: ${character.image}');">
+            <h2>${character.name}</h2>
+            <p>${character.description}</p>
+          `;
+          card.addEventListener('click', () => showCharacterStories(character));
+          charactersGrid.appendChild(card);
+        });
+      };
+      renderCharacters();
+
+      // Character Stories
+      const characterStories = document.getElementById('character-stories');
+      const characterName = document.getElementById('character-name');
+      const characterStoriesGrid = document.getElementById('character-stories-grid');
+      const backToCharacters = document.getElementById('back-to-characters');
+      const showCharacterStories = (character) => {
+        characterName.textContent = `${character.name}'s Stories`;
+        characterStoriesGrid.innerHTML = '';
+        const filteredStories = stories.filter(story => story.characters.includes(character.name));
+        filteredStories.forEach(story => {
+          const card = document.createElement('div');
+          card.className = 'story-card';
+          card.innerHTML = `
+            <img src="${story.coverImage}" alt="${story.title}" onerror="this.src='https://via.placeholder.com/200x200?text=Image+Not+Found';">
+            <h2>${story.title}</h2>
+            <p>${story.preview}</p>
+          `;
+          card.addEventListener('click', () => showStoryDetail(story));
+          characterStoriesGrid.appendChild(card);
+        });
+        sections.forEach(section => section.classList.toggle('active', section.id === 'character-stories'));
+      };
+      backToCharacters.addEventListener('click', (e) => {
+        e.preventDefault();
+        sections.forEach(section => section.classList.toggle('active', section.id === 'characters'));
+      });
+
+      // Tag Search
+      const tagSearch = document.getElementById('tag-search');
+      const tagSearchTags = document.getElementById('tag-search-tags');
+      const tagsGrid = document.getElement-factory('tags-grid');
+      const filterStories = (searchValue) => {
+        const tags = searchValue.toLowerCase().split(' ').filter(t => t.startsWith('#'));
+        if (!tags.length) return stories;
+        return stories.filter(story => {
+          const storyTags = [...story.tags, ...story.parts.flatMap(p => p.tags)].map(t => t.toLowerCase());
+          return tags.every(tag => storyTags.includes(tag));
+        });
+      };
+      tagSearch.addEventListener('input', (e) => {
+        renderStories(filterStories(e.target.value));
+      });
+      tagSearchTags.addEventListener('input', (e) => {
+        const filteredStories = filterStories(e.target.value);
+        tagsGrid.innerHTML = '';
+        filteredStories.forEach(story => {
+          const card = document.createElement('div');
+          card.className = 'story-card';
+          card.innerHTML = `
+            <img src="${story.coverImage}" alt="${story.title}" onerror="this.src='https://via.placeholder.com/200x200?text=Image+Not+Found';">
+            <h2>${story.title}</h2>
+            <p>${story.preview}</p>
+          `;
+          card.addEventListener('click', () => showStoryDetail(story));
+          tagsGrid.appendChild(card);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
