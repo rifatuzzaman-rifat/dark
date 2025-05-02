@@ -3,533 +3,360 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Story Haven</title>
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <title>Secure Access</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Roboto', sans-serif; /* Default font for body */
+      font-family: 'Segoe UI', sans-serif;
     }
-
     body {
-      background: linear-gradient(135deg, #1a1a2e, #16213e);
-      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Top Navigation Bar */
-    nav.top-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 60px; /* Fixed height for navbar */
-      background: linear-gradient(180deg, #0f3460, #1a1a2e);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-    }
-
-    .brand {
-      color: #00ddeb;
-      font-size: 1.8rem;
-      font-weight: bold;
-      text-shadow: 0 0 10px rgba(0, 221, 235, 0.5);
-      text-decoration: none;
-      font-family: 'Playfair Display', serif; /* Fancy font for brand */
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-links a {
-      color: #e0e0e0;
-      text-decoration: none;
-      font-size: 1.2rem;
-      padding: 10px 15px;
-      transition: background 0.3s, color 0.3s;
-      display: flex;
-      align-items: center;
-      font-family: 'Montserrat', sans-serif; /* Font for nav links */
-    }
-
-    .nav-links a i {
-      margin-right: 8px;
-    }
-
-    .nav-links a:hover {
-      background: #ff2e63;
+      background: linear-gradient(135deg, #0f0f1a, #2a2a4a);
       color: #fff;
-      border-radius: 5px;
+      overflow: auto;
     }
-
-    .nav-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: #00ddeb;
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 10px;
-    }
-
-    /* Main Content */
     .container {
-      padding: 80px 20px 20px; /* Adjust for navbar height (60px + extra spacing) */
-      min-height: calc(100vh - 40px);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      animation: fadeIn 0.5s ease;
     }
-
-    h1, h2 {
-      color: #00ddeb;
-      text-shadow: 0 0 10px rgba(0, 221, 235, 0.5);
-      font-family: 'Montserrat', sans-serif; /* Font for headings */
-      display: flex;
-      align-items: center;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
-    h1 i, h2 i {
-      margin-right: 10px;
+    h2 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: #00f7ff;
+      text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff;
     }
-
-    .section {
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    input:focus {
+      outline: none;
+      border-color: #ff00cc;
+      box-shadow: 0 0 12px #ff00cc;
+    }
+    button {
+      background: linear-gradient(135deg, #00f7ff, #ff00cc);
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px 5px;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 247, 255, 0.6);
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0.4); }
+      50% { box-shadow: 0 0 20px 10px rgba(0, 247, 255, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 247, 255, 0); }
+    }
+    .error {
+      color: #ff4d4d;
+      font-size: 14px;
+      margin-top: 10px;
+      animation: shake 0.3s ease;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    .hidden {
       display: none;
     }
-
-    .section.active {
-      display: block;
-    }
-
-    /* Search Bar */
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      background: #0f3460;
-      border: 2px solid #00ddeb;
-      border-radius: 5px;
-      color: #e0e0e0;
-      font-size: 1rem;
-      transition: border-color 0.3s;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    input[type="text"]:focus {
-      outline: none;
-      border-color: #ff2e63;
-    }
-
-    input[type="text"]::placeholder {
-      color: #adb5bd;
-    }
-
-    /* Grid */
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 30px; /* Increased gap for larger cards */
-    }
-
-    .story-card, .character-card {
-      background: #16213e;
+    #patternCanvas {
+      background: rgba(255, 255, 255, 0.03);
       border-radius: 10px;
-      overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      padding: 15px; /* Increased padding for larger cards */
-    }
-
-    .story-card:hover, .character-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 221, 235, 0.3);
-    }
-
-    .story-card img, .character-card img {
-      width: 100%; /* Full width of the card */
-      height: 300px; /* Square shape */
-      object-fit: contain; /* Ensure full image is visible */
-      background: #16213e; /* Match card background for empty space */
-      border-bottom: 2px solid #ff2e63;
-      display: block; /* Ensure proper rendering */
-    }
-
-    .story-card h2, .character-card h2 {
-      font-size: 1.8rem; /* Larger title */
-      margin: 15px 0; /* Increased margin */
-      color: #e0e0e0;
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    .story-card p, .character-card p {
-      font-size: 1rem; /* Slightly larger description */
-      margin: 0 0 15px; /* Increased margin */
-      color: #adb5bd;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    /* Story Detail */
-    #story-content img {
-      width: 100%;
-      height: 400px; /* Larger square for story detail */
-      object-fit: contain;
-      background: #16213e;
-      border-radius: 10px;
-      margin-bottom: 15px;
+      margin: 20px auto;
       display: block;
     }
-
-    .part {
-      margin-bottom: 20px;
-    }
-
-    .part-toggle {
-      background: none;
-      border: none;
-      color: #00ddeb;
-      font-size: 1.2rem;
-      cursor: pointer;
-      padding: 10px;
-      display: block;
-      text-align: left;
-      transition: color 0.3s;
-      font-family: 'Montserrat', sans-serif;
-    }
-
-    .part-toggle:hover {
-      color: #ff2e63;
-    }
-
-    .part-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-      background: #0f3460;
-      border-radius: 8px;
-      padding: 0 15px;
-    }
-
-    .part-content.active {
-      max-height: 2000px; /* Adjust for longer content */
-      padding: 15px;
-    }
-
-    .part-content img {
-      width: 100%;
-      height: 300px; /* Square shape for part images */
-      object-fit: contain;
-      background: #0f3460;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    .back-btn {
-      color: #00ddeb;
-      text-decoration: none;
-      font-size: 1rem;
-      margin-bottom: 15px;
-      display: inline-block;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    .back-btn:hover {
-      color: #ff2e63;
-    }
-
-    /* Media Queries */
-    @media (min-width: 768px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background: linear-gradient(180deg, #0f3460, #1a1a2e);
-        padding: 10px 0;
-      }
-
-      .nav-links.active {
-        display: flex;
-      }
-
-      .nav-links a {
-        padding: 15px;
-        text-align: center;
-      }
-
-      .nav-toggle {
-        display: block;
-      }
-
+    @media (max-width: 480px) {
       .container {
-        padding: 80px 15px 15px; /* Adjust for mobile navbar height */
+        padding: 20px;
+        margin: 10px;
       }
-
-      .story-card img, .character-card img {
-        height: 250px; /* Slightly smaller on mobile */
+      #patternCanvas {
+        width: 250px;
+        height: 250px;
       }
-
-      .part-content img {
-        height: 250px; /* Slightly smaller on mobile */
+      h2 {
+        font-size: 22px;
       }
-
-      #story-content img {
-        height: 350px; /* Slightly smaller on mobile */
+      button {
+        padding: 10px 15px;
+        font-size: 14px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Top Navigation Bar -->
-  <nav class="top-nav">
-    <a href="#" class="brand">DARK</a>
-    <button class="nav-toggle"><i class="fas fa-bars"></i></button>
-    <div class="nav-links">
-      <a href="#stories" data-section="stories"><i class="fas fa-book"></i> Stories</a>
-      <a href="#characters" data-section="characters"><i class="fas fa-users"></i> Characters</a>
-      <a href="#tags" data-section="tags"><i class="fas fa-tags"></i> Tags</a>
-    </div>
-  </nav>
-
-  <!-- Main Content -->
-  <div class="container">
-    <!-- Stories Section -->
-    <section id="stories" class="section active">
-      <h1><i class="fas fa-book"></i> Stories</h1>
-      <input id="tag-search" type="text" placeholder="Search tags (e.g., #forest #king)">
-      <div id="stories-grid" class="grid"></div>
-    </section>
-
-    <!-- Story Detail Section -->
-    <section id="story-detail" class="section">
-      <a href="#" id="back-to-stories" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Stories</a>
-      <div id="story-content"></div>
-    </section>
-
-    <!-- Characters Section -->
-    <section id="characters" class="section">
-      <h1><i class="fas fa-users"></i> Characters</h1>
-      <div id="characters-grid" class="grid"></div>
-    </section>
-
-    <!-- Character Stories Section -->
-    <section id="character-stories" class="section">
-      <a href="#" id="back-to-characters" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Characters</a>
-      <h2 id="character-name"></h2>
-      <div id="character-stories-grid" class="grid"></div>
-    </section>
-
-    <!-- Tags Section -->
-    <section id="tags" class="section">
-      <h1><i class="fas fa-tags"></i> Tags</h1>
-      <input id="tag-search-tags" type="text" placeholder="Search tags (e.g., #forest #king)">
-      <div id="tags-grid" class="grid"></div>
-    </section>
+  <div class="container" id="login">
+    <h2>Layer 1: Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="verifyLogin()">Login</button>
+    <p id="login-error" class="error"></p>
+  </div>
+  <div class="container hidden" id="pattern-lock">
+    <h2>Layer 2: Pattern Lock</h2>
+    <canvas id="patternCanvas" width="300" height="300"></canvas>
+    <button onclick="resetPattern()">Reset</button>
+    <button onclick="verifyPattern()">Submit</button>
+    <p id="pattern-error" class="error"></p>
+  </div>
+  <div class="container hidden" id="security-question">
+    <h2>Layer 3: Security Question</h2>
+    <p id="question"></p>
+    <input type="text" id="answer" placeholder="Your answer">
+    <button onclick="verifyAnswer()">Submit</button>
+    <p id="question-error" class="error"></p>
+  </div>
+  <div class="container hidden" id="content">
+    <h2>Confidential Content</h2>
+    <p>Welcome, authorized user! This is your secret data.</p>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      // Load data with error handling
-      let stories, characters;
-      try {
-        const storiesResponse = await fetch('data/stories.json');
-        if (!storiesResponse.ok) throw new Error('Failed to fetch stories.json');
-        stories = await storiesResponse.json();
-        console.log('Stories loaded:', stories);
+    // User data (plain text passwords, patterns, and answers)
+    const users = {
+      'rifat': {
+        password: '312205',
+        pattern: [5,2,8,4,3,7,6,1,9],
+        questions: [
+          { q: 'What is your favorite book?', answer: 'ebook' },
+          { q: 'What was your first pet’s name?', answer: 'donno' },
+          { q: 'What city were you born in?', answer: 'unborn' }
+        ]
+      },
+      'apurbo': {
+        password: 'acs@uhf',
+        pattern: [7,4,1,5,3,6,9],
+        questions: [
+          { q: 'Who is your crush?', answer: 'maria' },
+          { q: 'What was your dream with her?', answer: 'marry' },
+          { q: 'What city were you born in?', answer: 'mohanganj' }
+        ]
+      },
+      'shofiur': {
+        password: 'password3',
+        pattern: [1,2,3,6,5,4,7,8,9],
+        questions: [
+          { q: 'What is your favorite book?', answer: 'book1' },
+          { q: 'What was your first pet’s name?', answer: 'pet1' },
+          { q: 'What city were you born in?', answer: 'city1' }
+        ]
+      }
+    };
 
-        const charactersResponse = await fetch('data/characters.json');
-        if (!charactersResponse.ok) throw new Error('Failed to fetch characters.json');
-        characters = await charactersResponse.json();
-        console.log('Characters loaded:', characters);
-        characters.forEach(character => {
-          console.log(`Attempting to load image for ${character.name}: ${character.image}`);
-        });
-      } catch (error) {
-        console.error('Failed to load data:', error);
-        alert('Error loading data. Please ensure data/stories.json and data/characters.json exist and use a local server (e.g., Live Server in VS Code).');
-        stories = [];
-        characters = [];
+    let currentUser = null;
+    let totalAttempts = 0;
+    const maxAttempts = 3;
+
+    // Layer 1: Username and Password
+    function verifyLogin() {
+      if (totalAttempts >= maxAttempts) {
+        document.getElementById('login-error').textContent = 'Too many attempts. Access blocked.';
+        disableInputs();
+        return;
       }
 
-      // Navigation
-      const sections = document.querySelectorAll('.section');
-      const navLinks = document.querySelectorAll('.nav-links a');
-      const navToggle = document.querySelector('.nav-toggle');
-      const navLinksContainer = document.querySelector('.nav-links');
+      const username = document.getElementById('username').value.toLowerCase();
+      const password = document.getElementById('password').value;
+      const error = document.getElementById('login-error');
 
-      navToggle.addEventListener('click', () => {
-        navLinksContainer.classList.toggle('active');
-      });
-
-      navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const target = link.getAttribute('data-section');
-          sections.forEach(section => {
-            section.classList.toggle('active', section.id === target);
-          });
-          navLinksContainer.classList.remove('active'); // Close mobile menu after clicking
-        });
-      });
-
-      // Stories Grid
-      const storiesGrid = document.getElementById('stories-grid');
-      const renderStories = (filteredStories) => {
-        storiesGrid.innerHTML = '';
-        if (!filteredStories || filteredStories.length === 0) {
-          storiesGrid.innerHTML = '<p>No stories found.</p>';
-          return;
+      if (users[username]) {
+        if (password === users[username].password) {
+          currentUser = username;
+          document.getElementById('login').classList.add('hidden');
+          document.getElementById('pattern-lock').classList.remove('hidden');
+        } else {
+          totalAttempts++;
+          error.textContent = `Invalid password. ${maxAttempts - totalAttempts} attempts left.`;
         }
-        filteredStories.forEach(story => {
-          const card = document.createElement('div');
-          card.className = 'story-card';
-          card.innerHTML = `
-            <img src="${story.coverImage}" alt="${story.title}" onerror="this.src='https://via.placeholder.com/300x300?text=Image+Not+Found'; console.error('Failed to load story image: ${story.coverImage}');">
-            <h2>${story.title}</h2>
-            <p>${story.preview}</p>
-          `;
-          card.addEventListener('click', () => showStoryDetail(story));
-          storiesGrid.appendChild(card);
-        });
-      };
-      renderStories(stories);
+      } else {
+        totalAttempts++;
+        error.textContent = `Invalid username. ${maxAttempts - totalAttempts} attempts left.`;
+      }
+    }
 
-      // Story Detail
-      const storyDetail = document.getElementById('story-detail');
-      const storyContent = document.getElementById('story-content');
-      const backToStories = document.getElementById('back-to-stories');
-      const showStoryDetail = (story) => {
-        storyContent.innerHTML = `
-          <img src="${story.coverImage}" alt="${story.title}" onerror="this.src='https://via.placeholder.com/400x400?text=Image+Not+Found'; console.error('Failed to load story detail image: ${story.coverImage}');">
-          <h2>${story.title}</h2>
-          <p>Tags: ${story.tags.join(', ')}</p>
-          <p>Characters: ${story.characters.join(', ')}</p>
-          ${story.parts.map((part, index) => `
-            <div class="part">
-              <button class="part-toggle">Part ${index + 1} <i class="fas fa-arrow-right"></i> ${part.author}</button>
-              <div class="part-content">
-                <img src="${part.subCover}" alt="Part ${index + 1}" onerror="this.src='https://via.placeholder.com/300x300?text=Image+Not+Found'; console.error('Failed to load part image: ${part.subCover}');">
-                <p>Tags: ${part.tags.join(', ')}</p>
-                <p>${part.content}</p>
-              </div>
-            </div>
-          `).join('')}
-        `;
-        sections.forEach(section => section.classList.toggle('active', section.id === 'story-detail'));
-        document.querySelectorAll('.part-toggle').forEach(btn => {
-          btn.addEventListener('click', () => {
-            btn.nextElementSibling.classList.toggle('active');
-          });
-        });
-      };
-      backToStories.addEventListener('click', (e) => {
-        e.preventDefault();
-        sections.forEach(section => section.classList.toggle('active', section.id === 'stories'));
+    // Layer 2: Pattern Lock
+    const canvas = document.getElementById('patternCanvas');
+    const ctx = canvas.getContext('2d');
+    let currentPattern = [];
+    let isDrawing = false;
+
+    const dots = [
+      { x: 50, y: 50, id: 1 }, { x: 150, y: 50, id: 2 }, { x: 250, y: 50, id: 3 },
+      { x: 50, y: 150, id: 4 }, { x: 150, y: 150, id: 5 }, { x: 250, y: 150, id: 6 },
+      { x: 50, y: 250, id: 7 }, { x: 150, y: 250, id: 8 }, { x: 250, y: 250, id: 9 }
+    ];
+
+    function drawDots() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      dots.forEach(dot => {
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, 20, 0, 2 * Math.PI);
+        ctx.fillStyle = currentPattern.includes(dot.id) ? '#00f7ff' : 'rgba(255, 255, 255, 0.3)';
+        ctx.fill();
+        ctx.strokeStyle = currentPattern.includes(dot.id) ? '#ff00cc' : 'rgba(255, 255, 255, 0.2)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
       });
 
-      // Characters Grid
-      const charactersGrid = document.getElementById('characters-grid');
-      const renderCharacters = () => {
-        charactersGrid.innerHTML = '';
-        if (!characters || characters.length === 0) {
-          charactersGrid.innerHTML = '<p>No characters found.</p>';
-          return;
+      if (currentPattern.length >= 2) {
+        const startIndex = currentPattern[0] - 1;
+        const endIndex = currentPattern[currentPattern.length - 1] - 1;
+
+        if (startIndex >= 0 && endIndex >= 0 && startIndex < dots.length && endIndex < dots.length) {
+          const startDot = dots[startIndex];
+          const endDot = dots[endIndex];
+
+          if (startDot && endDot && !isNaN(startDot.x) && !isNaN(startDot.y) && !isNaN(endDot.x) && !isNaN(endDot.y)) {
+            ctx.beginPath();
+            ctx.moveTo(startDot.x, startDot.y);
+            for (let i = 1; i < currentPattern.length; i++) {
+              const dotIndex = currentPattern[i] - 1;
+              if (dotIndex >= 0 && dotIndex < dots.length) {
+                const dot = dots[dotIndex];
+                if (dot && !isNaN(dot.x) && !isNaN(dot.y)) {
+                  ctx.lineTo(dot.x, dot.y);
+                }
+              }
+            }
+
+            const gradient = ctx.createLinearGradient(startDot.x, startDot.y, endDot.x, endDot.y);
+            gradient.addColorStop(0, '#00f7ff');
+            gradient.addColorStop(1, '#ff00cc');
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 5;
+            ctx.stroke();
+          }
         }
-        characters.forEach(character => {
-          const card = document.createElement('div');
-          card.className = 'character-card';
-          card.innerHTML = `
-            <img src="${character.image}" alt="${character.name}" onerror="this.src='https://via.placeholder.com/300x300?text=Image+Not+Found'; console.error('Failed to load character image: ${character.image}');">
-            <h2>${character.name}</h2>
-            <p>${character.description}</p>
-          `;
-          card.addEventListener('click', () => showCharacterStories(character));
-          charactersGrid.appendChild(card);
-        });
-      };
-      renderCharacters();
+      }
+    }
 
-      // Character Stories
-      const characterStories = document.getElementById('character-stories');
-      const characterName = document.getElementById('character-name');
-      const characterStoriesGrid = document.getElementById('character-stories-grid');
-      const backToCharacters = document.getElementById('back-to-characters');
-      const showCharacterStories = (character) => {
-        characterName.textContent = `${character.name}'s Stories`;
-        characterStoriesGrid.innerHTML = '';
-        const filteredStories = stories.filter(story => story.characters.includes(character.name));
-        filteredStories.forEach(story => {
-          const card = document.createElement('div');
-          card.className = 'story-card';
-          card.innerHTML = `
-            <img src="${story.coverImage}" alt="${story.title}" onerror="this.src='https://via.placeholder.com/300x300?text=Image+Not+Found'; console.error('Failed to load story image: ${story.coverImage}');">
-            <h2>${story.title}</h2>
-            <p>${story.preview}</p>
-          `;
-          card.addEventListener('click', () => showStoryDetail(story));
-          characterStoriesGrid.appendChild(card);
-        });
-        sections.forEach(section => section.classList.toggle('active', section.id === 'character-stories'));
-      };
-      backToCharacters.addEventListener('click', (e) => {
-        e.preventDefault();
-        sections.forEach(section => section.classList.toggle('active', section.id === 'characters'));
-      });
-
-      // Tag Search
-      const tagSearch = document.getElementById('tag-search');
-      const tagSearchTags = document.getElementById('tag-search-tags');
-      const tagsGrid = document.getElementById('tags-grid');
-      const filterStories = (searchValue) => {
-        const tags = searchValue.toLowerCase().split(' ').filter(t => t.startsWith('#'));
-        if (!tags.length) return stories;
-        return stories.filter(story => {
-          const storyTags = [...story.tags, ...story.parts.flatMap(p => p.tags)].map(t => t.toLowerCase());
-          return tags.every(tag => storyTags.includes(tag));
-        });
-      };
-      tagSearch.addEventListener('input', (e) => {
-        renderStories(filterStories(e.target.value));
-      });
-      tagSearchTags.addEventListener('input', (e) => {
-        const filteredStories = filterStories(e.target.value);
-        tagsGrid.innerHTML = '';
-        filteredStories.forEach(story => {
-          const card = document.createElement('div');
-          card.className = 'story-card';
-          card.innerHTML = `
-            <img src="${story.coverImage}" alt="${story.title}" onerror="this.src='https://via.placeholder.com/300x300?text=Image+Not+Found'; console.error('Failed to load story image: ${story.coverImage}');">
-            <h2>${story.title}</h2>
-            <p>${story.preview}</p>
-          `;
-          card.addEventListener('click', () => showStoryDetail(story));
-          tagsGrid.appendChild(card);
-        });
-      });
+    canvas.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      checkDot(e);
     });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (isDrawing) checkDot(e);
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      isDrawing = false;
+    });
+
+    canvas.addEventListener('touchstart', (e) => {
+      isDrawing = true;
+      checkDot(e.touches[0]);
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (isDrawing) {
+        e.preventDefault();
+        checkDot(e.touches[0]);
+      }
+    });
+
+    canvas.addEventListener('touchend', () => {
+      isDrawing = false;
+    });
+
+    function checkDot(e) {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      dots.forEach(dot => {
+        if (Math.sqrt((x - dot.x) ** 2 + (y - dot.y) ** 2) < 20 && !currentPattern.includes(dot.id)) {
+          currentPattern.push(dot.id);
+          drawDots();
+        }
+      });
+    }
+
+    function resetPattern() {
+      currentPattern = [];
+      drawDots();
+    }
+
+    function verifyPattern() {
+      if (totalAttempts >= maxAttempts) {
+        document.getElementById('pattern-error').textContent = 'Too many attempts. Access blocked.';
+        disableInputs();
+        return;
+      }
+      if (currentPattern.join() === users[currentUser].pattern.join()) {
+        document.getElementById('pattern-lock').classList.add('hidden');
+        document.getElementById('security-question').classList.remove('hidden');
+        const questions = users[currentUser].questions;
+        const selectedQuestion = questions[Math.floor(Math.random() * questions.length)];
+        document.getElementById('question').textContent = selectedQuestion.q;
+        window.selectedQuestion = selectedQuestion;
+      } else {
+        totalAttempts++;
+        document.getElementById('pattern-error').textContent = `Invalid pattern. ${maxAttempts - totalAttempts} attempts left.`;
+        resetPattern();
+      }
+    }
+
+    drawDots();
+
+    // Layer 3: Security Question
+    function verifyAnswer() {
+      if (totalAttempts >= maxAttempts) {
+        document.getElementById('question-error').textContent = 'Too many attempts. Access blocked.';
+        disableInputs();
+        return;
+      }
+      const answer = document.getElementById('answer').value;
+      if (answer === window.selectedQuestion.answer) {
+        document.getElementById('security-question').classList.add('hidden');
+        document.getElementById('content').classList.remove('hidden');
+        // Redirect to index.html after showing welcome
+        setTimeout(() => {
+          window.location.href = 'stories.html';
+        }, 800); // Redirect after 2 seconds to allow user to see the welcome message
+      } else {
+        totalAttempts++;
+        document.getElementById('question-error').textContent = `Incorrect answer. ${maxAttempts - totalAttempts} attempts left.`;
+      }
+    }
+
+    // Disable inputs on lockout
+    function disableInputs() {
+      document.querySelectorAll('input, button').forEach(el => el.disabled = true);
+    }
   </script>
 </body>
 </html>
