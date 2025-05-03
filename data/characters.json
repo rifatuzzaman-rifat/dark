@@ -28,5 +28,15 @@
     "name": "Orpa",
     "image": "orpa.jpg",
     "description": "A fearless archer with unparalleled precision. She defends her homeland from invaders with her trusty bow and sharp instincts."
+  },
+    {
+    "name": "Faria",
+    "image": "faria.jpg",
+    "description": "A fearless archer with unparalleled precision. She defends her homeland from invaders with her trusty bow and sharp instincts."
+  },
+    {
+    "name": "Navana",
+    "image": "nava.jpg",
+    "description": "A fearless archer with unparalleled precision. She defends her homeland from invaders with her trusty bow and sharp instincts."
   }
 ]
